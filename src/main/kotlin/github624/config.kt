@@ -6,11 +6,25 @@ import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.deser.Deserializers
 import com.fasterxml.jackson.databind.deser.std.StdDelegatingDeserializer
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.type.TypeFactory
 import com.fasterxml.jackson.databind.util.Converter
+import org.springframework.context.annotation.Bean
+import org.springframework.stereotype.Component
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.javaType
+
+@Component
+class JsonConfiguration {
+  @Bean
+  fun jsonModule() = object : SimpleModule("Github624Module") {
+    override fun setupModule(context: SetupContext) {
+      super.setupModule(context)
+      context.addDeserializers(Deserializers624())
+    }
+  }
+}
 
 private class Deserializers624 : Deserializers.Base() {
   override fun findBeanDeserializer(
