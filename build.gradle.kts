@@ -14,10 +14,6 @@ kotlin {
 testing {
   suites.withType<JvmTestSuite>().configureEach {
     useJUnitJupiter()
-    targets.configureEach {
-      testTask {
-      }
-    }
   }
 }
 
